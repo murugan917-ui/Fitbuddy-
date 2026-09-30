@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your FitBuddy Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; font-family: 'Roboto', sans-serif; color: #fff; padding: 20px;
+         background: linear-gradient(rgba(0,0,0,.8), rgba(0,0,0,.9)), url('/static/images/gym.jpg') center/cover fixed, #111; }
+  .wrap { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+  .box { background: rgba(20,20,20,.92); padding: 24px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,.6); }
+  h1 { color: #ff5722; margin: 0 0 8px; font-weight: 900; }
+  h2 { color: #ff8a65; margin-top: 0; }
+  pre { white-space: pre-wrap; word-wrap: break-word; font-family: 'Roboto', sans-serif; line-height: 1.6; margin: 0; }
+  textarea { width: 100%; padding: 10px; border-radius: 8px; border: none; font-size: 16px; min-height: 80px; }
+  button { margin-top: 12px; padding: 12px 24px; border: none; border-radius: 8px; background: #ff5722;
+           color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; transition: .2s; }
+  button:hover { background: #e64a19; transform: translateY(-2px); }
+  a { color: #ffab91; }
+  .error { background: #b71c1c; padding: 10px; border-radius: 8px; }
+  .badge { background: #2e7d32; padding: 3px 10px; border-radius: 12px; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="box">
+    <h1>Hello, {{ user.username }}!</h1>
+    <div>Goal: <b>{{ user.goal }}</b> &nbsp;|&nbsp; Intensity: <b>{{ user.intensity }}</b>
+      {% if updated %}&nbsp;<span class="badge">Updated with your feedback</span>{% endif %}</div>
+  </div>
+
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+  <div class="box">
+    <h2>Your 7-Day Workout Plan</h2>
+    <pre>{{ plan }}</pre>
+  </div>
+
+  <div class="box">
+    <h2>Nutrition / Recovery Tip</h2>
+    <pre>{{ tip }}</pre>
+  </div>
+
+  <div class="box">
+    <h2>Want changes? Give feedback</h2>
+    <form action="/submit-feedback" method="post">
+      <input type="hidden" name="user_id" value="{{ user.user_id }}">
+      <textarea name="feedback" placeholder="e.g. more focus on cardio, include more rest days" required></textarea>
+      <button type="submit">Update My Plan</button>
+    </form>
+  </div>
+
+  <div style="text-align:center"><a href="/">&larr; Back to home</a></div>
+</div>
+</body>
+</html>
