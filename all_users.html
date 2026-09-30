@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FitBuddy - Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 20px; min-height: 100vh; font-family: 'Roboto', sans-serif; color: #fff; background: #111; }
+  h1 { color: #ff5722; text-align: center; font-weight: 900; }
+  .scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: #1c1c1c; border-radius: 12px; overflow: hidden; }
+  th, td { padding: 12px; border-bottom: 1px solid #333; text-align: left; vertical-align: top; }
+  th { background: #ff5722; }
+  pre { white-space: pre-wrap; word-wrap: break-word; font-family: 'Roboto', sans-serif; margin: 0; max-width: 340px; font-size: 14px; }
+  a { color: #ffab91; }
+  .center { text-align: center; margin-top: 20px; }
+</style>
+</head>
+<body>
+<h1>Admin Dashboard - All Users</h1>
+<div class="scroll">
+<table>
+  <tr>
+    <th>Username</th><th>Age</th><th>Weight</th><th>Goal</th><th>Intensity</th>
+    <th>Original Plan</th><th>Updated Plan</th>
+  </tr>
+  {% for user in users %}
+  {% set p = plans.get(user.user_id) %}
+  <tr>
+    <td>{{ user.username }}</td>
+    <td>{{ user.age }}</td>
+    <td>{{ user.weight }} kg</td>
+    <td>{{ user.goal }}</td>
+    <td>{{ user.intensity }}</td>
+    <td><pre>{{ p.original_plan if p else '-' }}</pre></td>
+    <td><pre>{{ p.updated_plan if p and p.updated_plan else 'No update yet' }}</pre></td>
+  </tr>
+  {% else %}
+  <tr><td colspan="7">No users registered yet.</td></tr>
+  {% endfor %}
+</table>
+</div>
+<div class="center"><a href="/">&larr; Back to home</a></div>
+</body>
+</html>
